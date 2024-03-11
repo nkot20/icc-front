@@ -26,10 +26,21 @@ jobs:
           pwd
           ls -al
           
-      - name: Build
+      - name: Install and build
         run: |
           npm install
           npm run build
+      - name: List source directory contents
+        run: ls -la .next
+
+      - name: Create deployment artefact
+        run: tar -czf ${{ github.sha }}.tar.gz -C .next .
+
+      - name: Store artefact for distribution
+        uses: actions/upload-artifact@v4
+        with:
+            name: app-build
+            path: ${{ github.sha }}.tar.gz
 
   # unit-test:
   #   runs-on: ubuntu-latest
@@ -51,39 +62,24 @@ jobs:
   #         npm install
   #         npm test
 
-  create-deployment-artefacts:
-    name: Create deployment artefacts
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v2
 
-      - name: Create deployment artefact
-        env:
-          GITHUB_SHA: ${{ github.sha }}
-        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=node_modules *
-
-      - name: Store artefact for distribution
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-build
-          path: ${{ github.sha }}.tar.gz
 
   prepare-release-on-servers:
     runs-on: ubuntu-latest
-    needs: create-deployment-artefacts
+    needs: build
 
     steps:
       - name: Download deployment artefact
         uses: actions/download-artifact@v2
         with:
           name: app-build
+          path: .next
 
       - name: Create artifact directory
         run: mkdir -p artifact
           
       - name: Extract files
-        run: tar -xzf ${{ github.sha }}.tar.gz -C .
+        run: tar -xzf .next/${{ github.sha }}.tar.gz -C .
 
       - name: Drop zip and tar files
         run: rm ${{ github.sha }}.tar.gz
