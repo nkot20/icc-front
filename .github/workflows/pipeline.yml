@@ -82,7 +82,7 @@ jobs:
         run: tar -xzf .next/${{ github.sha }}.tar.gz -C .
 
       - name: Drop zip and tar files
-        run: rm ${{ github.sha }}.tar.gz
+        run: rm .next/${{ github.sha }}.tar.gz
   
       - name: Copy file via SSH key
         uses: appleboy/scp-action@master
