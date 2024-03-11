@@ -99,7 +99,7 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           port: ${{ secrets.DEPLOY_PORT }}
           source: .
-          target: ${{ secrets.DEPLOY_PATH }}
+          target: /home/m4muser/frontend
           overwrite: true
           debug: true
           
