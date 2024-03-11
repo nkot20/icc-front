@@ -79,8 +79,8 @@ jobs:
         run: sudo mkdir -p artifact
           
       - name: Extract files
-        run: sudo tar -xzf .next/${{ github.sha }}.tar.gz -C .
-
+        run: sudo tar -xzf .next/${{ github.sha }}.tar.gz -C . && sudo chown -R $USER:$USER .
+      
       - name: Drop zip and tar files
         run: sudo rm .next/${{ github.sha }}.tar.gz
   
