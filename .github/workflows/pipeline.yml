@@ -76,13 +76,13 @@ jobs:
           path: .next
 
       - name: Create artifact directory
-        run: mkdir -p artifact
+        run: sudo mkdir -p artifact
           
       - name: Extract files
-        run: tar -xzf .next/${{ github.sha }}.tar.gz -C .
+        run: sudo tar -xzf .next/${{ github.sha }}.tar.gz -C .
 
       - name: Drop zip and tar files
-        run: rm .next/${{ github.sha }}.tar.gz
+        run: sudo rm .next/${{ github.sha }}.tar.gz
   
       - name: Copy file via SSH key
         uses: appleboy/scp-action@master
@@ -105,6 +105,6 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
-            pm2 start npm --name app -- run start -- -p 3000
-            pm2 reload app
-            pm2 show app
+            sudo pm2 start npm --name app -- run start -- -p 3000
+            sudo pm2 reload app
+            sudo pm2 show app
