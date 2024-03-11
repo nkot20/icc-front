@@ -81,6 +81,10 @@ jobs:
       - name: Extract files
         run: sudo tar -xzf .next/${{ github.sha }}.tar.gz -C . && sudo chown -R $USER:$USER .
       
+      # Vérifier les fichiers extraits
+      - name: List extracted files
+        run: ls -la
+
       - name: Drop zip and tar files
         run: sudo rm .next/${{ github.sha }}.tar.gz
   
