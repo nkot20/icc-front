@@ -79,7 +79,7 @@ jobs:
         run: sudo mkdir -p artifact
 
       - name: Set permissions for extraction directory
-        run: chmod -R 777 .
+        run: chmod -R 777 .next/${{ github.sha }}.tar.gz
           
       - name: Extract files
         run: sudo tar -xzf .next/${{ github.sha }}.tar.gz -C . && sudo chown -R $USER:$USER .
