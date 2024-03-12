@@ -79,7 +79,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app-build
-          path: ${{ github.sha }}
 
       - name: Create artifact directory
         run:  mkdir -p artifact
