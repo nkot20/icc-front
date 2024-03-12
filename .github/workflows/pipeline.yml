@@ -33,8 +33,14 @@ jobs:
       - name: List source directory contents
         run: ls -la
 
+      - name: Copy files to temporary directory
+        run: cp -r . /tmp/test
+
       - name: Create deployment artefact
-        run: tar -czf ${{ github.sha }}.tar.gz -C .
+        run: tar -czf ${{ github.sha }}.tar.gz -C /tmp/test .
+
+      - name: Remove temporary directory
+        run: rm -rf /tmp/test
 
       - name: Store artefact for distribution
         uses: actions/upload-artifact@v4
