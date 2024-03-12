@@ -73,20 +73,20 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app-build
-          path: .next
+      
 
       - name: Create artifact directory
         run:  mkdir -p artifact
  
       - name: Extract files
-        run:  tar -xzf .next/${{ github.sha }}.tar.gz -C . 
+        run:  tar -xzf ${{ github.sha }}.tar.gz -C . 
       
       # Vérifier les fichiers extraits
       - name: List extracted files
         run: ls -la
 
       - name: Drop zip and tar files
-        run:  rm .next/${{ github.sha }}.tar.gz
+        run:  rm ${{ github.sha }}.tar.gz
   
       - name: Copy file via SSH key
         uses: appleboy/scp-action@master
