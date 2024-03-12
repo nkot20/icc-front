@@ -34,7 +34,7 @@ jobs:
         run: ls -la
 
       - name: Create deployment artefact
-        run: tar -czf ${{ github.sha }}.tar.gz .
+        run: tar -czf ${{ github.sha }}.tar.gz -C .
 
       - name: Store artefact for distribution
         uses: actions/upload-artifact@v4
