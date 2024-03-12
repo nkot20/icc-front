@@ -76,20 +76,17 @@ jobs:
           path: .next
 
       - name: Create artifact directory
-        run: sudo mkdir -p artifact
-
-      - name: Set permissions for extraction directory
-        run: chmod -R 777 .next/${{ github.sha }}.tar.gz
-          
+        run:  mkdir -p artifact
+ 
       - name: Extract files
-        run: sudo tar -xzf .next/${{ github.sha }}.tar.gz -C . && sudo chown -R $USER:$USER .
+        run:  tar -xzf .next/${{ github.sha }}.tar.gz -C . 
       
       # Vérifier les fichiers extraits
       - name: List extracted files
         run: ls -la
 
       - name: Drop zip and tar files
-        run: sudo rm .next/${{ github.sha }}.tar.gz
+        run:  rm .next/${{ github.sha }}.tar.gz
   
       - name: Copy file via SSH key
         uses: appleboy/scp-action@master
@@ -112,6 +109,6 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           script: |
             cd ${{ secrets.DEPLOY_PATH }}
-            sudo pm2 start npm --name app -- run start -- -p 3000
-            sudo pm2 reload app
-            sudo pm2 show app
+            pm2 start npm --name app -- run start -- -p 3000
+            pm2 reload app
+            w pm2 show app
